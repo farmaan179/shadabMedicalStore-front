@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,600;0,700;1,500&family=Work+Sans:wght@400;500;600;700&display=swap');
+
+:root {
+  --teal-deep: #0B5351;
+  --teal-mid: #0F766E;
+  --teal-soft: #8FC1B5;
+  --cream: #F4F8F6;
+  --amber: #F2A65A;
+  --amber-dark: #D97F2A;
+  --coral: #E85D5D;
+  --ink: #0E2A28;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background-color: var(--cream);
+  color: var(--ink);
+  font-family: 'Work Sans', sans-serif;
+}
+
+h1, h2, h3, h4, .font-display {
+  font-family: 'Fraunces', serif;
+}
+
+/* Custom color utility classes since Bootstrap's palette is different */
+.bg-teal-deep { background-color: var(--teal-deep) !important; }
+.bg-cream { background-color: var(--cream) !important; }
+.text-teal-deep { color: var(--teal-deep) !important; }
+.text-teal-soft { color: var(--teal-soft) !important; }
+.text-amber-dark { color: var(--amber-dark) !important; }
+.text-coral { color: var(--coral) !important; }
+.border-teal-soft { border-color: var(--teal-soft) !important; }
+
+.btn-teal { background-color: var(--teal-deep); color: #fff; border: none; }
+.btn-teal:hover { background-color: var(--teal-mid); color: #fff; }
+.btn-outline-teal { border: 1px solid var(--teal-deep); color: var(--teal-deep); background: transparent; }
+.btn-outline-teal:hover { background-color: var(--teal-deep); color: #fff; }
+.btn-amber { background-color: var(--amber); color: #fff; border: none; }
+.btn-amber:hover { background-color: var(--amber-dark); color: #fff; }
+
+.rounded-4 { border-radius: 1.25rem !important; }
+
+/* Animations */
+@keyframes floatUp {
+  0% { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.animate-floatUp { animation: floatUp 0.7s ease-out forwards; }
+
+@keyframes pulseSoft {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+.animate-pulseSoft { animation: pulseSoft 2.5s ease-in-out infinite; }
+
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.hover-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(11, 83, 81, 0.15);
+}
+.hover-zoom img { transition: transform 0.5s ease; }
+.hover-zoom:hover img { transform: scale(1.1); }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+}
