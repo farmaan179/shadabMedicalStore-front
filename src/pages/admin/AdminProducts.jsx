@@ -24,8 +24,7 @@ export default function AdminProducts() {
     setUploading(true);
     try {
       const res = await api.post("/upload", data, { headers: { "Content-Type": "multipart/form-data" } });
-      const fullUrl = `${import.meta.env.VITE_API_URL.replace("/api", "")}${res.data.imageUrl}`;
-      setForm((f) => ({ ...f, image: fullUrl }));
+      setForm((f) => ({ ...f, image: res.data.imageUrl }));
     } catch (err) {
       alert("Image upload failed");
     } finally {
