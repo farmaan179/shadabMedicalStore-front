@@ -6,12 +6,20 @@ export default function AdminMessages() {
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const loadMessages = () => {
     api.get("/contact")
       .then((res) => setMessages(res.data))
       .catch(() => {})
       .finally(() => setLoading(false));
-  }, []);
+  };
+
+  useEffect(() => { loadMessages(); }, []);
+
+  const handleDelete = async (id) => {
+    if (!confirm("Delete this message?")) return;
+    await api.delete(`/contact/${id}`);
+    loadMessages();
+  };
 
   return (
     <div>
@@ -36,14 +44,22 @@ export default function AdminMessages() {
                   </div>
                   <p className="small mb-1">📞 {m.phone}</p>
                   <p className="small text-muted mb-2">{m.message}</p>
-                  
-                   <a href={`https://wa.me/91${m.phone.replace(/\D/g, "").slice(-10)}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-sm btn-outline-teal rounded-pill align-self-start"
-                  >
-                    Reply on WhatsApp
-                  </a>
+                  <div className="d-flex gap-2">
+                    
+                     <a href={`https://wa.me/91${m.phone.replace(/\D/g, "").slice(-10)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="btn btn-sm btn-outline-teal rounded-pill"
+                    >
+                      Reply on WhatsApp
+                    </a>
+                    <button
+                      onClick={() => handleDelete(m._id)}
+                      className="btn btn-sm btn-outline-danger rounded-pill"
+                    >
+                      Delete
+                    </button>
+                  </div>
                 </div>
               </div>
             ))}
