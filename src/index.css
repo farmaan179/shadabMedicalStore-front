@@ -67,3 +67,53 @@ h1, h2, h3, h4, .font-display {
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
 }
+/* --- Card hover effects --- */
+.hover-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  border: 2px solid transparent !important;
+}
+.hover-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 14px 30px rgba(11, 83, 81, 0.18) !important;
+  border-color: var(--teal-soft) !important;
+}
+
+/* --- Form focus/hover animation --- */
+.form-control, .form-select {
+  transition: box-shadow 0.25s ease, border-color 0.25s ease;
+}
+.form-control:focus, .form-select:focus {
+  border-color: var(--teal-mid) !important;
+  box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15) !important;
+}
+
+/* --- Stat card hover (admin dashboard) --- */
+.stat-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.stat-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(11, 83, 81, 0.15) !important;
+}
+
+/* --- Star rating --- */
+.star-rating { color: #F2A65A; font-size: 0.9rem; letter-spacing: 1px; }
+
+/* --- Discount strike price --- */
+.mrp-strike { text-decoration: line-through; color: #9CA3AF; font-size: 0.85rem; }
+
+/* --- Success toast --- */
+.toast-success-custom {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  z-index: 2000;
+  animation: slideInRight 0.4s ease, fadeOut 0.4s ease 2.6s forwards;
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeOut {
+  to { opacity: 0; transform: translateX(20px); }
+}

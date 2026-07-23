@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import api from "../api/api";
 import { useAuth } from "../context/AuthContext";
+import Toast from "../components/Toast";
 
 export default function Signup() {
   const [form, setForm] = useState({ name: "", email: "", phone: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -18,7 +20,8 @@ export default function Signup() {
     try {
       const res = await api.post("/auth/signup", form);
       login(res.data.user, res.data.token);
-      navigate("/");
+      setShowToast(true);
+      setTimeout(() => navigate("/"), 900);
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed. Try again.");
     } finally {
@@ -28,6 +31,7 @@ export default function Signup() {
 
   return (
     <div className="min-vh-100 bg-cream d-flex align-items-center justify-content-center px-3 py-5">
+      <Toast message="Account created successfully! 🎉" show={showToast} />
       <div className="bg-white rounded-4 shadow p-4 p-md-5 animate-floatUp" style={{ maxWidth: "420px", width: "100%" }}>
         <div className="d-flex justify-content-center mb-4"><Logo size={48} /></div>
         <h1 className="h4 fw-semibold text-teal-deep text-center mb-1">Create your account</h1>

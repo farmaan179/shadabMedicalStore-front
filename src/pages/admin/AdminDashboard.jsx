@@ -24,26 +24,26 @@ export default function AdminDashboard() {
 
       <div className="row g-4 mb-4">
         <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-3">
+          <div className="card stat-card border-0 shadow-sm rounded-4 p-3">
             <p className="text-muted small mb-1">Total Orders</p>
             <h3 className="text-teal-deep fw-bold">{stats.totalOrders}</h3>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-3">
+          <div className="card stat-card border-0 shadow-sm rounded-4 p-3">
             <p className="text-muted small mb-1">Total Revenue</p>
             <h3 className="text-teal-deep fw-bold">₹{stats.totalRevenue}</h3>
           </div>
         </div>
         <div className="col-md-4">
-          <div className="card border-0 shadow-sm rounded-4 p-3">
+          <div className="card stat-card border-0 shadow-sm rounded-4 p-3">
             <p className="text-muted small mb-1">Total Customers</p>
             <h3 className="text-teal-deep fw-bold">{stats.totalCustomers}</h3>
           </div>
         </div>
       </div>
 
-      <div className="card border-0 shadow-sm rounded-4 p-3 mb-4">
+      <div className="card stat-card border-0 shadow-sm rounded-4 p-3 mb-4">
         <h5 className="text-teal-deep mb-3">⚠️ Low Stock (≤ 10 units)</h5>
         {stats.lowStock.length === 0 ? (
           <p className="text-muted small mb-0">All stocked up!</p>
@@ -58,7 +58,7 @@ export default function AdminDashboard() {
         )}
       </div>
 
-      <div className="card border-0 shadow-sm rounded-4 p-3">
+      <div className="card stat-card border-0 shadow-sm rounded-4 p-3">
         <h5 className="text-teal-deep mb-3">Recent Orders</h5>
         <ul className="list-unstyled small mb-0">
           {stats.recentOrders.map((o) => (

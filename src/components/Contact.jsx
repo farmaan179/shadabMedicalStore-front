@@ -39,7 +39,7 @@ export default function Contact() {
           <div className="col-md-6">
             <form
               onSubmit={handleSubmit}
-              className="bg-white bg-opacity-10 border border-white border-opacity-25 rounded-4 p-4 h-100"
+              className="bg-white bg-opacity-10 border border-white border-opacity-25 rounded-4 p-4 h-100 hover-card"
             >
               <div className="mb-3">
                 <label
@@ -126,8 +126,8 @@ export default function Contact() {
                 ></iframe>
               </div>
 
-              
-                <a href="https://www.google.com/maps/place/Shadab+Madikal+Store/@27.9137451,78.0975735,17z"
+              <a
+                href="https://www.google.com/maps/place/Shadab+Madikal+Store/@27.9137451,78.0975735,17z"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-sm btn-outline-light rounded-pill mt-3"

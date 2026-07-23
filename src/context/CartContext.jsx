@@ -18,7 +18,7 @@ export function CartProvider({ children }) {
       if (existing) {
         return prev.map((i) => i._id === product._id ? { ...i, quantity: i.quantity + qty } : i);
       }
-      return [...prev, { ...product, quantity: qty }];
+      return [...prev, { ...product, quantity: qty, selected: true }];
     });
   };
 
@@ -29,13 +29,27 @@ export function CartProvider({ children }) {
     setCart((prev) => prev.map((i) => (i._id === id ? { ...i, quantity } : i)));
   };
 
-  const clearCart = () => setCart([]);
+  const toggleSelect = (id) => {
+    setCart((prev) => prev.map((i) => (i._id === id ? { ...i, selected: !i.selected } : i)));
+  };
 
-  const totalAmount = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const clearCart = () => setCart([]);
+  const clearSelected = () => setCart((prev) => prev.filter((i) => !i.selected));
+
+  const finalPrice = (item) => Math.round(item.price - (item.price * (item.discountPercent || 0)) / 100);
+
+  const selectedItems = cart.filter((i) => i.selected);
+  const mrpTotal = selectedItems.reduce((sum, i) => sum + i.price * i.quantity, 0);
+  const finalTotal = selectedItems.reduce((sum, i) => sum + finalPrice(i) * i.quantity, 0);
+  const totalSavings = mrpTotal - finalTotal;
   const totalItems = cart.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, totalAmount, totalItems }}>
+    <CartContext.Provider value={{
+      cart, addToCart, removeFromCart, updateQuantity, toggleSelect,
+      clearCart, clearSelected, selectedItems, mrpTotal, finalTotal,
+      totalSavings, totalItems, finalPrice
+    }}>
       {children}
     </CartContext.Provider>
   );

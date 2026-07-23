@@ -3,11 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../components/Logo";
 import api from "../api/api";
 import { useAuth } from "../context/AuthContext";
+import Toast from "../components/Toast";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showToast, setShowToast] = useState(false);
   const navigate = useNavigate();
   const { login } = useAuth();
 
@@ -18,7 +20,8 @@ export default function Login() {
     try {
       const res = await api.post("/auth/login", form);
       login(res.data.user, res.data.token);
-      navigate("/");
+      setShowToast(true);
+      setTimeout(() => navigate("/"), 900);
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Check your credentials.");
     } finally {
@@ -28,6 +31,7 @@ export default function Login() {
 
   return (
     <div className="min-vh-100 bg-cream d-flex align-items-center justify-content-center px-3">
+      <Toast message="Login successful! Welcome back 🎉" show={showToast} />
       <div className="bg-white rounded-4 shadow p-4 p-md-5 animate-floatUp" style={{ maxWidth: "420px", width: "100%" }}>
         <div className="d-flex justify-content-center mb-4"><Logo size={48} /></div>
         <h1 className="h4 fw-semibold text-teal-deep text-center mb-1">Welcome back</h1>
@@ -51,7 +55,7 @@ export default function Login() {
         </form>
 
         <p className="text-center small text-muted mt-4">
-          New here? <Link to="/signup" className="text-amber-dark fw-semibold text-decoration-none">Create an account</Link>
+          New here? <Link to="/signup" className="text-amber-dark fw-semibold">Create an account</Link>
         </p>
       </div>
     </div>
