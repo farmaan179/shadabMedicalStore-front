@@ -35,7 +35,7 @@ export default function AdminMessages() {
           <div className="row g-3">
             {messages.map((m) => (
               <div className="col-md-6" key={m._id}>
-                <div className="card border-0 shadow-sm rounded-4 p-3 h-100">
+                <div className="card message-card border-0 shadow-sm rounded-4 p-3 h-100">
                   <div className="d-flex justify-content-between align-items-start mb-2">
                     <h6 className="fw-semibold text-teal-deep mb-0">{m.name}</h6>
                     <span className="small text-muted">
@@ -46,7 +46,7 @@ export default function AdminMessages() {
                   <p className="small text-muted mb-2">{m.message}</p>
                   <div className="d-flex gap-2">
                     
-                     <a href={`https://wa.me/91${m.phone.replace(/\D/g, "").slice(-10)}`}
+                      <a href={`https://wa.me/91${m.phone.replace(/\D/g, "").slice(-10)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="btn btn-sm btn-outline-teal rounded-pill"
