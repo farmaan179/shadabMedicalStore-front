@@ -5,7 +5,7 @@ import api from "../../api/api";
 export default function AdminOrders() {
   const [orders, setOrders] = useState([]);
   const [notifyId, setNotifyId] = useState(null);
-  const [eta, setEta] = useState("30 minutes");
+  const [etaMinutes, setEtaMinutes] = useState(30);
 
   const load = () => api.get("/orders").then((res) => setOrders(res.data));
   useEffect(() => { load(); }, []);
@@ -21,12 +21,16 @@ export default function AdminOrders() {
     load();
   };
 
+  const buildMessage = (order) => {
+    if (order.status === "delivered") {
+      return `Hi ${order.customerName}, aapka order Shadab Medical Store se deliver ho chuka hai. Dhanyawad! 🙏`;
+    }
+    return `Hi ${order.customerName}, aapka order confirm ho gaya hai aur ${etaMinutes} minute mein pahunch jayega. — Shadab Medical Store`;
+  };
+
   const sendWhatsApp = (order) => {
     const cleanPhone = order.phone.replace(/\D/g, "").slice(-10);
-    const message =
-      order.status === "delivered"
-        ? `Hi ${order.customerName}, aapka order Shadab Medical Store se deliver ho chuka hai. Dhanyawad! 🙏`
-        : `Hi ${order.customerName}, aapka order confirm ho gaya hai aur ${eta} mein pahunch jayega. — Shadab Medical Store`;
+    const message = buildMessage(order);
     const url = `https://wa.me/91${cleanPhone}?text=${encodeURIComponent(message)}`;
     window.open(url, "_blank");
     setNotifyId(null);
@@ -61,21 +65,25 @@ export default function AdminOrders() {
               </div>
 
               {notifyId === o._id && (
-                <div className="bg-cream rounded-3 p-3 mb-2 d-flex gap-2 align-items-center flex-wrap">
+                <div className="bg-cream rounded-3 p-3 mb-2">
                   {o.status !== "delivered" && (
-                    <>
-                      <label className="small mb-0">Arrives in:</label>
+                    <div className="d-flex align-items-center gap-2 mb-2">
+                      <label className="small mb-0">Arrives in (minutes):</label>
                       <input
-                        value={eta}
-                        onChange={(e) => setEta(e.target.value)}
+                        type="number"
+                        min="1"
+                        value={etaMinutes}
+                        onChange={(e) => setEtaMinutes(e.target.value)}
                         className="form-control form-control-sm"
-                        style={{ maxWidth: "150px" }}
-                        placeholder="e.g. 30 minutes"
+                        style={{ maxWidth: "90px" }}
                       />
-                    </>
+                    </div>
                   )}
-                  <button onClick={() => sendWhatsApp(o)} className="btn btn-sm btn-teal">Send WhatsApp</button>
-                  <button onClick={() => setNotifyId(null)} className="btn btn-sm btn-outline-secondary">Cancel</button>
+                  <p className="small text-muted mb-2 fst-italic">"{buildMessage(o)}"</p>
+                  <div className="d-flex gap-2">
+                    <button onClick={() => sendWhatsApp(o)} className="btn btn-sm btn-teal">Send WhatsApp</button>
+                    <button onClick={() => setNotifyId(null)} className="btn btn-sm btn-outline-secondary">Cancel</button>
+                  </div>
                 </div>
               )}
 
