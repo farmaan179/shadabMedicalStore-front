@@ -117,3 +117,5 @@ h1, h2, h3, h4, .font-display {
 @keyframes fadeOut {
   to { opacity: 0; transform: translateX(20px); }
 }
+.message-card { transition: transform 0.25s ease, box-shadow 0.25s ease; }
+.message-card:hover { transform: translateY(-4px); box-shadow: 0 12px 24px rgba(11,83,81,0.15) !important; }
