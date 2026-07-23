@@ -62,8 +62,18 @@ export default function AdminDashboard() {
         <h5 className="text-teal-deep mb-3">Recent Orders</h5>
         <ul className="list-unstyled small mb-0">
           {stats.recentOrders.map((o) => (
-            <li key={o._id} className="d-flex justify-content-between border-bottom py-1">
-              <span>{o.customerName} — {o.phone}</span><span>₹{o.totalAmount} · {o.status}</span>
+            <li key={o._id} className="d-flex align-items-center gap-3 border-bottom py-2">
+              <img
+                src={o.items?.[0]?.image}
+                alt=""
+                width={40}
+                height={40}
+                style={{ objectFit: "cover", borderRadius: "6px", flexShrink: 0 }}
+              />
+              <div className="flex-grow-1 d-flex justify-content-between flex-wrap">
+                <span>{o.customerName} — {o.phone}</span>
+                <span>₹{o.totalAmount} · {o.status}</span>
+              </div>
             </li>
           ))}
         </ul>
